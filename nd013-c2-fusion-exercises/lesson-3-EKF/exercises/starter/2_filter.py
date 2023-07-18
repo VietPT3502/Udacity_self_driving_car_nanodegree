@@ -16,18 +16,24 @@ class Filter:
         ############
         # TODO: implement and return F
         ############
+        return np.matrix([[1, 0, self.dt, 0],
+                          [0, 1, 0, self.dt],
+                          [0, 0, 1, 0],
+                          [0, 0, 0, 1]])
         
-        pass
 
-    def Q(self):
+    def Q(self):            
         # process noise covariance Q
 
         ############
         # TODO: implement and return Q
         ############
-        
-        pass
-    
+        q = self.q
+        dt = self.dt
+        return np.matrix([[1/3 * (dt ** 3), 0, 1/2 * (dt **2) * q, 0],
+                          [0, 1/3 * (dt **3) * q, 0, 1/2 * (dt **2)],
+                          [1/2 * (dt **2), 0, dt * q, 0],
+                          [0, 1/2 * (dt **2), 0, dt * q]])
     def H(self):
         # measurement matrix H
 
@@ -35,13 +41,14 @@ class Filter:
         # TODO: implement and return H
         ############
     
-        pass
+        return np.matrix([[1, 0, 0, 0],
+                          [0, 1, 0, 0]])
     
     def predict(self, x, P):
         # predict state and estimation error covariance to next timestep
         F = self.F()
         x = F*x # state prediction
-        P = F*P*F.transpose() + self.Q() # covariance prediction
+        P = F*P*F.transpose() + self.Q() # covariance predictionSIFTtranslation_matrix
         return x, P
 
     def update(self, x, P, z, R):

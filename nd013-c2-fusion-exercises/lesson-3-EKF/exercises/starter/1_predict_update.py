@@ -24,6 +24,9 @@ class Filter:
 
         ############
         # TODO: implement prediction step
+
+        x = self.F() @ x
+        P = self.F() @ P @ self.F().transpose() + self.Q()
         ############
         
         return x, P
@@ -33,6 +36,12 @@ class Filter:
 
         ############
         # TODO: implement update step
+        y = z - self.H() @ x
+        S = self.H() @ P @ self.H().transpose() + R
+        K = P @ self.H().transpose() @ np.linalg.inv(S)
+
+        x = x + K @ y
+        P = (np.eye(self.dim_state) - K @ self.H()) @ P @ (np.eye(self.dim_state) - K @ self.H()).transpose() + K @ R @ K.transpose()
         ############
         
         return x, P     

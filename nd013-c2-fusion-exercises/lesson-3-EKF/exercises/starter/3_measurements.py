@@ -19,6 +19,8 @@ class Camera:
         ############
         # TODO: implement and return h(x)
         ############
+        hx[0,0] = self.c_i - self.f_i * x[1] / x[0]
+        hx[1,0] = self.c_j - self.f_j * x[2] / x[0]
         
         return hx
     
@@ -29,7 +31,12 @@ class Camera:
         ############
         # TODO: implement and return H
         ############ 
-        
+        if x[0] == 0:
+            raise NameError('Jacobian not defined for x[0]=0!')
+        H[0, 0] = self.f_i * x[1] / (x[0] ** 2)
+        H[1, 0] = self.f_j * x[2] / (x[0] ** 2)
+        H[0, 1] = - self.f_i / x[0]
+        H[1, 2] = -self.f_j * x[0]
         return H
  
  
@@ -96,6 +103,5 @@ x = np.matrix([[10],
             [0],
             [0],
             [0]])
-
 calc_Jacobian(x)
 
