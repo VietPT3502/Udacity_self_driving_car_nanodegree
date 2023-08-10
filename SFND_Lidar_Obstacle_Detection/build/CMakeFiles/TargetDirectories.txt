@@ -1,0 +1,3 @@
+/home/vietpt/vietpt/Udacity_self_driving_car_nanodegree/SFND_Lidar_Obstacle_Detection/build/CMakeFiles/environment.dir
+/home/vietpt/vietpt/Udacity_self_driving_car_nanodegree/SFND_Lidar_Obstacle_Detection/build/CMakeFiles/edit_cache.dir
+/home/vietpt/vietpt/Udacity_self_driving_car_nanodegree/SFND_Lidar_Obstacle_Detection/build/CMakeFiles/rebuild_cache.dir

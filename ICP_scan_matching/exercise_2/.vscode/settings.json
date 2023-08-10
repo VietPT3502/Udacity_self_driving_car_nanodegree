@@ -1,0 +1,30 @@
+{
+    "files.associations": {
+        "functional": "cpp",
+        "__functional_03": "cpp",
+        "target": "cpp",
+        "random": "cpp",
+        "*.tcc": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "chrono": "cpp",
+        "variant": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp"
+    }
+}

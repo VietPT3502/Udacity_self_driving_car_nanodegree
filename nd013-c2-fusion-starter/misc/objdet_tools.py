@@ -386,6 +386,7 @@ def show_objects_in_bev_labels_in_camera(detections, bev_maps, image, object_lab
     bev_map = cv2.rotate(bev_map, cv2.ROTATE_180)
 
     # project ground-truth labels into camera image
+    print(object_labels)
     img_rgb = project_labels_into_camera(camera_calibration, image, object_labels, object_labels_valid)
 
     # merge camera image and bev image into a combined view

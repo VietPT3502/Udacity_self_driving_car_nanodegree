@@ -79,12 +79,14 @@ class Filter:
         ############
         # TODO Step 1: update state x and covariance P with associated measurement, save x and P in track
         ############
+        print("track state:", track.x)
         H = meas.sensor.get_H(track.x)
         gamma = self.gamma(track, meas)
         I = np.eye(params.dim_state)
         S = self.S(track, meas, H)
         K = track.P * H.transpose() * np.linalg.inv(S)
         x = track.x + K * gamma
+        print("update state:", x)
         P = (I - K * H) * track.P * (I - K * H).transpose() + K * meas.R * K.transpose()
         track.set_x(x)
         track.set_P(P)
