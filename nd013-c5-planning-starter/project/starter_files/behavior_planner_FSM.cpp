@@ -79,7 +79,7 @@ double BehaviorPlannerFSM::get_look_ahead_distance(const State& ego_state) {
   // using a comfortable deceleration.
   auto look_ahead_distance = - velocity_mag * velocity_mag / (accel_mag * accel_mag);  // <- Fix This
 
-  LOG(INFO) << "Calculated look_ahead_distance: " << look_ahead_distance;
+  // LOG(INFO) << "Calculated look_ahead_distance: " << look_ahead_distance;
 
   look_ahead_distance =
       std::min(std::max(look_ahead_distance, _lookahead_distance_min),
@@ -199,7 +199,7 @@ State BehaviorPlannerFSM::state_transition(const State& ego_state, State goal,
         std::chrono::duration_cast<std::chrono::seconds>(
             std::chrono::high_resolution_clock::now() - _start_stop_time)
             .count();
-    LOG(INFO) << "BP- Stopped for " << stopped_secs << " secs";
+    // LOG(INFO) << "BP- Stopped for " << stopped_secs << " secs";
 
     if (stopped_secs >= _req_stop_time && tl_state.compare("Red") != 0) {
       // TODO-move to FOLLOW_LANE state: What state do we want to move to, when

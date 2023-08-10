@@ -42,7 +42,7 @@ double collision_circles_cost_spiral(const std::vector<PathPoint>& spiral,
 
   for (auto wp : spiral) {
     if (collision) {
-      LOG(INFO) << " ***** COLLISION DETECTED *********" << std::endl;
+      // LOG(INFO) << " ***** COLLISION DETECTED *********" << std::endl;
       break;
     }
     double cur_x = wp.x;
