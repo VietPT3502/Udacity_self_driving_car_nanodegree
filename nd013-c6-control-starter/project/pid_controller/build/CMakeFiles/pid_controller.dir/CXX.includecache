@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/vietpt/vietpt/code/Udacity_self_driving_car_nanodegree/nd013-c6-control-starter/project/pid_controller/pid_controller.cpp
+pid_controller.h
+/home/vietpt/vietpt/code/Udacity_self_driving_car_nanodegree/nd013-c6-control-starter/project/pid_controller/pid_controller.h
+vector
+-
+iostream
+-
+math.h
+-
+
+/home/vietpt/vietpt/code/Udacity_self_driving_car_nanodegree/nd013-c6-control-starter/project/pid_controller/pid_controller.h
+
