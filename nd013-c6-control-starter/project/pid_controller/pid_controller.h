@@ -63,7 +63,7 @@ public:
     /*
     * Update the delta time.
     */
-    double UpdateDeltaTime(double new_delta_time);
+    void UpdateDeltaTime(double new_delta_time);
 };
 
 #endif //PID_CONTROLLER_H

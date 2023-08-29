@@ -228,6 +228,8 @@ int main ()
 
   PID pid_steer = PID();
   PID pid_throttle = PID();
+  pid_steer.Init(0.3 ,0.4 ,0.1, -1, 1);
+  pid_throttle.Init(0.3 ,0.2 ,0.1 , 1, -1);
 
   h.onMessage([&pid_steer, &pid_throttle, &new_delta_time, &timer, &prev_timer, &i, &prev_timer](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode)
   {
@@ -301,9 +303,8 @@ int main ()
           /**
           * TODO (step 3): compute the steer error (error_steer) from the position and the desired trajectory
           **/
-          double desired_angle = std::tan(x_points[x_points.size() - 1] / y_points[y_points.size() - 1]);
-          pid_steer.UpdateError(yaw - desired_angle);
-          error_steer = pid_steer.TotalError();
+          error_steer = angle_between_points(x_position, y_position, x_points[i], y_points[i]) - yaw;
+
 
           /**
           * TODO (step 3): uncomment these lines
@@ -338,8 +339,8 @@ int main ()
           **/
           // modify the following line for step 2
           // dif between the last point speed and desired speed
-          pid_throttle.UpdateError(v_points[v_points.size() - 1] - velocity );
-          error_throttle = pid_throttle.TotalError();
+          error_throttle = v_points[i] - velocity;
+          std::cout << v_points[i] << "  " << velocity << std::endl;
 
 
 
