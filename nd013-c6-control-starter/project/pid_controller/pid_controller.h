@@ -13,28 +13,32 @@ public:
    /**
    * TODO: Create the PID class
    **/
+
     /*
     * Errors
     */
-    double cte;
-    double prev_cte;
-    double int_cte;
-    double dif_cte;
-    double sum_cte;
+    double pro_error;
+    double dif_error;
+    double int_error;
+    double prev_error;
+
+
+
     /*
     * Coefficients
     */
+
     double p_array[3];
-    double dp_array[3];
-    double theta;
+    
     /*
     * Output limits
     */
-    double output_lim_max, output_lim_min;
+    double output_lim_max;
+    double output_lim_min;
     /*
     * Delta time
     */
-    double delta_t;
+    double delta_time;
     /*
     * Constructor
     */
@@ -63,9 +67,7 @@ public:
     /*
     * Update the delta time.
     */
-    void UpdateDeltaTime(double new_delta_time);
+    double UpdateDeltaTime(double new_delta_time);
 };
 
 #endif //PID_CONTROLLER_H
-
-

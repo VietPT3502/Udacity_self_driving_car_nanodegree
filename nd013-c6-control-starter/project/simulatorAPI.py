@@ -195,7 +195,7 @@ class World(object):
                 _tl_state = str(traffic_light.get_state())
             cur_junction_id = waypoint.get_junction().id
             if (cur_junction_id == _prev_junction_id or cur_junction_id in not_junction or _tl_state is 'Green'):
-                is_goal_junction = False;
+                is_goal_junction = False
             else:
                 _prev_junction_id = cur_junction_id
 

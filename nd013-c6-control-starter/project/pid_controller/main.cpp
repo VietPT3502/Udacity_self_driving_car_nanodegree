@@ -216,21 +216,17 @@ int main ()
 
   // initialize pid steer
   /**
-  * TODO (Step 1): create pid (pid_steer) for steer command and initialize values
+  * (Step 1): create pid (pid_steer) for steer command and initialize values
   **/
-  
-
-
-  // initialize pid throttle
-  /**
-  * TODO (Step 1): create pid (pid_throttle) for throttle command and initialize values
-  **/
-
   PID pid_steer = PID();
   PID pid_throttle = PID();
-  pid_steer.Init(0.3 ,0.4 ,0.1, -1, 1);
-  pid_throttle.Init(0.3 ,0.2 ,0.1 , 1, -1);
-
+  // initialize pid throttle
+  /**
+  * (Step 1): create pid (pid_throttle) for throttle command and initialize values
+  **/
+  pid_steer.Init(0, 0 ,0 , 1.2, -1.2);
+  pid_throttle.Init(0 ,0 ,0 , 1, -1);
+  
   h.onMessage([&pid_steer, &pid_throttle, &new_delta_time, &timer, &prev_timer, &i, &prev_timer](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode)
   {
         auto s = hasData(data);
@@ -289,29 +285,41 @@ int main ()
           ////////////////////////////////////////
 
           /**
-          * TODO (step 3): uncomment these lines
+          * (step 3): uncomment these lines
           **/
-//           // Update the delta time with the previous command
+          // Update the delta time with the previous command
           pid_steer.UpdateDeltaTime(new_delta_time);
 
           // Compute steer error
           double error_steer;
 
-
           double steer_output;
+          double dis_min = 10000.0;
+          int close_id = 0;
 
           /**
-          * TODO (step 3): compute the steer error (error_steer) from the position and the desired trajectory
+          * (step 3): compute the steer error (error_steer) from the position and the desired trajectory
           **/
-          error_steer = angle_between_points(x_position, y_position, x_points[i], y_points[i]) - yaw;
-
-
+          for (int id =0; i< x_points.size(); ++i)
+          {
+            double act_dis = pow((x_position - x_points[id]),2) + pow((y_position - y_points[id]),2);
+            if (act_dis < dis_min)
+            {
+              dis_min = act_dis;
+              close_id = id;
+            }
+          }
+          std::cout << "len" << v_points.size() << " " << x_points.size() << std::endl;
+          error_steer = angle_between_points(x_position,y_position,x_points[close_id],y_points[close_id]) - yaw;
+          
           /**
-          * TODO (step 3): uncomment these lines
+          * (step 3): uncomment these lines
           **/
           // Compute control to apply
           pid_steer.UpdateError(error_steer);
+          std::cout << "current steer error" << pid_steer.pro_error << std::endl;
           steer_output = pid_steer.TotalError();
+          std::cout << "after steer pid: "<< steer_output << std::endl;
 
           // Save data
           file_steer.seekg(std::ios::beg);
@@ -327,33 +335,30 @@ int main ()
           ////////////////////////////////////////
 
           /**
-          * TODO (step 2): uncomment these lines
+          * (step 2): uncomment these lines
           **/
-//           // Update the delta time with the previous command
+          // Update the delta time with the previous command
           pid_throttle.UpdateDeltaTime(new_delta_time);
 
           // Compute error of speed
           double error_throttle;
           /**
-          * TODO (step 2): compute the throttle error (error_throttle) from the position and the desired speed
+          * (step 2): compute the throttle error (error_throttle) from the position and the desired speed
           **/
-          // modify the following line for step 2
-          // dif between the last point speed and desired speed
-          error_throttle = v_points[i] - velocity;
-          std::cout << v_points[i] << "  " << velocity << std::endl;
-
-
-
+           // modify the following line for step 2
+//           error_throttle =  velocity - accumulate(v_points.begin(), v_points.end(), 0)/v_points.size();
+		      error_throttle = v_points[close_id] - velocity;
           double throttle_output;
           double brake_output;
 
           /**
-          * TODO (step 2): uncomment these lines
+          * (step 2): uncomment these lines
           **/
           // Compute control to apply
           pid_throttle.UpdateError(error_throttle);
+          std::cout << "current throttle error" << pid_throttle.pro_error << std::endl;
           double throttle = pid_throttle.TotalError();
-
+          std::cout << "after steer pid: "<< steer_output << std::endl;
           // Adapt the negative throttle to break
           if (throttle > 0.0) {
             throttle_output = throttle;
